@@ -24,21 +24,21 @@ bedden:
   - naam: Bed 1
     positie: [1.94, 0]
     maat: [1.34, 5]
-    notitie: aardappels en vruchtgewassen
-    teelt:
-      - {gewas: aardappel, deel: 2, notitie: 'vroeg ras, bijv. Frieslander', daarna: [andijvie]}
-      - {gewas: courgette, deel: 1.5}
-      - {gewas: pompoen, notitie: ranken mogen over het pad of naar de bloemen groeien}
-
-  - naam: Bed 2
-    positie: [3.88, 0]
-    maat: [1.34, 5]
-    notitie: peulvruchten en blad
+    notitie: peulvruchten en blad (in 2026 stonden hier snoeptomaatjes)
     teelt:
       - {gewas: doperwt, deel: 1.5, daarna: [veldsla]}
       - {gewas: stamboon, deel: 1.5}
       - {gewas: kropsla, deel: 1.2, herhaal: 3, elke: 3}
       - {gewas: pluksla}
+
+  - naam: Bed 2
+    positie: [3.88, 0]
+    maat: [1.34, 5]
+    notitie: aardappels en vruchtgewassen
+    teelt:
+      - {gewas: aardappel, deel: 2, notitie: 'vroeg ras, bijv. Frieslander', daarna: [andijvie]}
+      - {gewas: courgette, deel: 1.5}
+      - {gewas: pompoen, notitie: ranken mogen over het pad groeien}
 
   - naam: Fruit
     positie: [5.82, 0]

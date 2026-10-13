@@ -46,9 +46,11 @@
     const S = (beschikbaar - M - 4) / (staand ? tuin.breedte : tuin.lengte); // pixels per meter
     const W = (staand ? tuin.breedte : tuin.lengte) * S;
     const H = (staand ? tuin.lengte : tuin.breedte) * S;
-    // tuincoördinaten (x langs lengte, y langs breedte) -> scherm
+    // tuincoördinaten (x langs lengte, y langs breedte) -> scherm.
+    // Rechtop is de liggende tekening een kwartslag linksom gedraaid (niet gespiegeld):
+    // de voorkant komt onderaan, de bovenrand links.
     const scherm = (r) => (staand
-      ? { x: M + r.y * S, y: MB + r.x * S, w: r.h * S, h: r.w * S }
+      ? { x: M + r.y * S, y: MB + (tuin.lengte - r.x - r.w) * S, w: r.h * S, h: r.w * S }
       : { x: M + r.x * S, y: MB + r.y * S, w: r.w * S, h: r.h * S });
 
     const svg = el('svg', { viewBox: `0 0 ${W + M + 4} ${H + MB + 4}`, role: 'img', 'aria-label': `Plattegrond van ${tuin.naam}` });
@@ -63,7 +65,7 @@
       if (m > 0) lat.append(el('line', { x1: M + m * S, x2: M + m * S, y1: MB, y2: MB + H, stroke: 'var(--tekst-3)', 'stroke-opacity': 0.12 }));
     }
     for (let m = 1; m <= (staand ? tuin.lengte : tuin.breedte); m++) {
-      lat.append(el('text', { x: M - 6, y: MB + m * S + 3, 'text-anchor': 'end', tekst: m }));
+      lat.append(el('text', { x: M - 6, y: MB + m * S + 3, 'text-anchor': 'end', tekst: staand ? tuin.lengte - m : m }));
       lat.append(el('line', { x1: M, x2: M + W, y1: MB + m * S, y2: MB + m * S, stroke: 'var(--tekst-3)', 'stroke-opacity': 0.12 }));
     }
     svg.append(lat);
@@ -155,7 +157,7 @@
         g.classList.remove('sleept');
         if (!bewogen) { if (o.onBed) o.onBed(bed); return; }
         let mx = dx / S, my = dy / S;
-        if (staand) [mx, my] = [my, mx];
+        if (staand) [mx, my] = [-my, mx];
         o.onVerplaats(bed, bed.x + mx, bed.y + my);
       };
       g.addEventListener('pointermove', beweeg);
