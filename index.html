@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moestuinplanner</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥕</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="kop">
+    <div class="wrap">
+      <h1 id="titel">Moestuinplanner</h1>
+      <p id="ondertitel" class="sub"></p>
+      <nav>
+        <a href="#nu">Nu</a>
+        <a href="#plattegrond">Plattegrond</a>
+        <a href="#tijdlijn">Tijdlijn</a>
+        <a href="#taken">Taken</a>
+        <a href="#hoeveelheden">Hoeveelheden</a>
+        <a href="editor.html" class="nav-rechts">✏️ Bewerken</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="concept" class="waarschuwingen" hidden>✏️ Je bekijkt een <strong>concept uit de editor</strong>, niet de gepubliceerde <code>tuin.yaml</code>. <a href="editor.html">Terug naar de editor</a> · <a href="index.html">Bekijk tuin.yaml</a></div>
+    <div id="fout" class="fout" hidden></div>
+    <details id="waarschuwingen" class="waarschuwingen" hidden>
+      <summary></summary>
+      <ul></ul>
+    </details>
+
+    <section id="nu">
+      <h2>Nu te doen</h2>
+      <p class="uitleg" id="nu-uitleg"></p>
+      <ul class="takenlijst" id="nu-lijst"></ul>
+    </section>
+
+    <section id="plattegrond">
+      <h2>Plattegrond</h2>
+      <div class="bediening">
+        <div class="segment" role="group" aria-label="Weergave">
+          <button type="button" data-modus="seizoen" aria-pressed="true">Hele seizoen</button>
+          <button type="button" data-modus="datum" aria-pressed="false">Op datum</button>
+        </div>
+        <input type="range" id="schuif" min="0" max="52" step="1" aria-label="Datum" disabled>
+        <span id="schuif-datum" class="schuif-datum"></span>
+      </div>
+      <div class="plan-grid">
+        <div id="plan" class="plan"></div>
+        <aside id="detail" class="detail">
+          <p class="uitleg">Klik op een strook voor details.</p>
+        </aside>
+      </div>
+      <div id="legenda" class="legenda"></div>
+    </section>
+
+    <section id="tijdlijn">
+      <h2>Tijdlijn</h2>
+      <div class="legenda fasen">
+        <span><i class="fase fase-binnen"></i>binnen voorzaaien</span>
+        <span><i class="fase fase-groei"></i>groeit in de grond</span>
+        <span><i class="fase fase-oogst"></i>oogsten</span>
+      </div>
+      <div id="gantt" class="gantt"></div>
+    </section>
+
+    <section id="taken">
+      <h2>Taken</h2>
+      <div class="bediening">
+        <label><input type="checkbox" id="verberg-verleden" checked> verberg wat voorbij is</label>
+        <label><input type="checkbox" id="verberg-klaar"> verberg afgevinkt</label>
+        <button type="button" id="ics" class="knop">📅 Zet in je agenda (.ics)</button>
+      </div>
+      <div id="takenkalender"></div>
+    </section>
+
+    <section id="hoeveelheden">
+      <h2>Hoeveelheden</h2>
+      <p class="uitleg">Berekend uit de strookmaat en de rij- en plantafstand. Zaad is inclusief marge voor uitval en uitdunnen. Opbrengsten zijn ruwe vuistregels.</p>
+      <div class="tabel-scroll"><table id="tabel"></table></div>
+    </section>
+  </main>
+
+  <div id="tooltip" class="tooltip" hidden></div>
+
+  <footer class="wrap voet">Pas je indeling aan in de <a href="editor.html">editor</a> of direct in <code>tuin.yaml</code>; gewassen staan in <code>gewassen.yaml</code>.</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  <script src="planner.js"></script>
+  <script src="tekening.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

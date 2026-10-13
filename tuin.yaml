@@ -1,0 +1,92 @@
+# Mijn moestuin. Gemaakt met editor.html; je kunt dit bestand ook met de hand bewerken.
+# Gewassen staan in gewassen.yaml.
+#
+# Coördinaten in meters vanaf linksboven: x langs de lengte, y langs de breedte.
+# Bed:   positie [x, y] (linkerbovenhoek), maat [breed, hoog], soort (bed/kas/compost/pad/overig)
+# Teelt: gewas, deel (strooklengte in m, weglaten = rest), datum (2027-04-15, 04-15 of week 15),
+#        plantgoed (plantjes kopen), herhaal + elke (gespreid zaaien), daarna (nateelten), notitie
+
+tuin:
+  naam: Onze moestuin
+  lengte: 13
+  breedte: 5
+  jaar: 2027
+
+bedden:
+  - naam: Bloemen
+    positie: [0, 0]
+    maat: [1.34, 5]
+    teelt:
+      - {gewas: zonnebloem}
+      - {gewas: dahlia, deel: 1.5}
+      - {gewas: bloemenmengsel, deel: 2}
+
+  - naam: Bed 1
+    positie: [1.94, 0]
+    maat: [1.34, 5]
+    notitie: aardappels en vruchtgewassen
+    teelt:
+      - {gewas: aardappel, deel: 2, notitie: 'vroeg ras, bijv. Frieslander', daarna: [andijvie]}
+      - {gewas: courgette, deel: 1.5}
+      - {gewas: pompoen, notitie: ranken mogen over het pad of naar de bloemen groeien}
+
+  - naam: Bed 2
+    positie: [3.88, 0]
+    maat: [1.34, 5]
+    notitie: peulvruchten en blad
+    teelt:
+      - {gewas: doperwt, deel: 1.5, daarna: [veldsla]}
+      - {gewas: stamboon, deel: 1.5}
+      - {gewas: kropsla, deel: 1.2, herhaal: 3, elke: 3}
+      - {gewas: pluksla}
+
+  - naam: Fruit
+    positie: [5.82, 0]
+    maat: [1.34, 5]
+    notitie: vaste planten, blijft staan
+    teelt:
+      - {gewas: aardbei, deel: 1}
+      - {gewas: herfstframboos, deel: 1.3, notitie: 'Rubus idaeus ''Autumn Bliss'', rood'}
+      - {gewas: ribes, deel: 1.3, notitie: 'Ribes rubrum ''Rolan'', rode bes'}
+      - {gewas: herfstframboos, notitie: 'Rubus idaeus ''Fallgold'', geel'}
+
+  - naam: Bed 3
+    positie: [7.76, 0]
+    maat: [1.34, 5]
+    notitie: koolgewassen
+    teelt:
+      - {gewas: boerenkool, deel: 1.5}
+      - {gewas: broccoli, deel: 1.5}
+      - {gewas: spitskool, deel: 1}
+      - {gewas: radijs, herhaal: 2, elke: 2}
+
+  - naam: Bed 4
+    positie: [9.7, 0]
+    maat: [1.34, 5]
+    notitie: wortels en uien
+    teelt:
+      - {gewas: winterui, deel: 1.3, datum: 2026-10-17, notitie: 'Shakespeare 14/21, 250 g (± 65 uitjes)', daarna: [andijvie]}
+      - {gewas: knoflook, deel: 1.1, datum: 2026-10-17, notitie: 'Messidrome, 5 bollen (± 40 à 50 teentjes, alleen de grote)', daarna: [phacelia]}
+      - {gewas: wintersjalot, deel: 1.2, datum: 2026-10-17, notitie: 'Golden Gourmet 10/15, 500 g (± 30 sjalotten)'}
+      - {gewas: prei, deel: 0.8}
+      - {gewas: wortel}
+
+  - naam: Compost
+    soort: compost
+    positie: [11.64, 0]
+    maat: [1.36, 1.6]
+
+  - naam: Bankje
+    soort: overig
+    positie: [11.64, 1.6]
+    maat: [1.36, 2]
+
+  - naam: Gereedschap
+    soort: overig
+    positie: [11.64, 3.6]
+    maat: [1.36, 1.4]
+
+taken:
+  - {datum: 2026-11-01, wat: Lege bedden afdekken met blad of een groenbemester}
+  - {datum: 01-15, wat: Zaadvoorraad nakijken en zaden bestellen}
+  - {datum: 03-01, wat: Compost over de bedden verdelen}

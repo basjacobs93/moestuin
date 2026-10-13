@@ -1,0 +1,665 @@
+# Gewassendatabase met vuistregels voor Nederland (laatste nachtvorst ± half mei).
+# Pas gerust aan. Je kunt ook in tuin.yaml onder `gewassen:` gewassen toevoegen
+# of losse velden overschrijven (bijv. een ander venster voor jouw ras).
+#
+# Velden per gewas:
+#   naam, emoji
+#   familie        sleutel uit `families` hieronder (voor vruchtwisseling en kleur)
+#   methode        zaaien      = direct buiten zaaien
+#                  voorzaaien  = binnen of onder glas zaaien, later uitplanten
+#                  poten       = pootgoed, plantuitjes, teentjes
+#                  planten     = je koopt/plant een plantje
+#   venster        periode voor de eerste handeling, [MM-DD, MM-DD], of een lijst
+#                  van zulke periodes als er meerdere zijn (voorjaar en najaar)
+#   uitplanten_na  (alleen voorzaaien) weken tussen zaaien en uitplanten
+#   rij, plant     rijafstand en afstand in de rij, in cm
+#   breedwerpig    true = breed uitstrooien, geen plantaantal (zaad_g_m2 = gram per m²)
+#   uitdunnen      true = taak "uitdunnen" 3 weken na zaaien
+#   oogst_na       dagen vanaf "in de grond" (zaaien, uitplanten of poten) tot de eerste oogst
+#   oogst_duur     weken dat je kunt oogsten
+#   oogst_label    andere tekst dan "eerste oogst" (bijv. voor groenbemesters)
+#   opbrengst      bijv. "3 kg/m2", "2 kg/plant", "1 stuks/plant", "4 bos/m2"
+#   plantgoed_naam hoe het pootgoed heet (bij poten)
+#   taken          extra taken: {weken: n, wat: ...} relatief aan "in de grond"
+#                  (negatief = ervoor), of {datum: MM-DD, wat: ...}
+#   vast           true = vaste plant (fruit): elk jaar oogst, geen zaai- of plantklus
+#   oogst          (alleen vast) oogstperiode [MM-DD, MM-DD]; taken met datum gelden elk jaar
+#   tip            korte tip
+
+families:
+  kool:        { naam: Koolachtigen }
+  nachtschade: { naam: Nachtschade }
+  peul:        { naam: Vlinderbloemigen }
+  wortel:      { naam: Schermbloemigen }
+  komkommer:   { naam: Komkommerachtigen }
+  blad:        { naam: Blad en biet }
+  ui:          { naam: Uien }
+  bloemen:     { naam: Bloemen }
+  overig:      { naam: Overig }
+
+gewassen:
+
+  # ---------- nachtschade ----------
+  aardappel:
+    naam: Aardappel
+    emoji: 🥔
+    familie: nachtschade
+    methode: poten
+    venster: [04-01, 04-30]
+    rij: 60
+    plant: 35
+    oogst_na: 90
+    oogst_duur: 4
+    opbrengst: 3 kg/m2
+    plantgoed_naam: pootaardappels
+    taken:
+      - { weken: 4, wat: aanaarden }
+      - { weken: 7, wat: nogmaals aanaarden }
+    tip: Vroege rassen kun je eind juni rooien; daarna is er plek voor een nateelt.
+
+  tomaat:
+    naam: Tomaat
+    emoji: 🍅
+    familie: nachtschade
+    methode: voorzaaien
+    venster: [03-15, 04-15]
+    uitplanten_na: 9
+    rij: 60
+    plant: 50
+    oogst_na: 70
+    oogst_duur: 10
+    opbrengst: 2 kg/plant
+    taken:
+      - { weken: 1, wat: opbinden en voortaan wekelijks dieven }
+      - { datum: 08-10, wat: toppen (top boven de laatste bloemtros eruit) }
+    tip: Buiten liefst tegen een zonnige muur of onder een afdakje, tegen phytophthora.
+
+  paprika:
+    naam: Paprika
+    emoji: 🫑
+    familie: nachtschade
+    methode: voorzaaien
+    venster: [02-15, 03-31]
+    uitplanten_na: 12
+    rij: 50
+    plant: 50
+    oogst_na: 80
+    oogst_duur: 8
+    opbrengst: 1 kg/plant
+    tip: Doet het buiten matig; beter in een kas of tunnel.
+
+  # ---------- komkommerachtigen ----------
+  courgette:
+    naam: Courgette
+    emoji: 🥒
+    familie: komkommer
+    methode: voorzaaien
+    venster: [04-15, 05-31]
+    uitplanten_na: 4
+    rij: 100
+    plant: 100
+    oogst_na: 50
+    oogst_duur: 12
+    opbrengst: 4 kg/plant
+    tip: Eén of twee planten is voor de meeste huishoudens genoeg.
+
+  pompoen:
+    naam: Pompoen
+    emoji: 🎃
+    familie: komkommer
+    methode: voorzaaien
+    venster: [04-20, 05-31]
+    uitplanten_na: 4
+    rij: 150
+    plant: 100
+    oogst_na: 110
+    oogst_duur: 4
+    opbrengst: 2 stuks/plant
+    tip: Oogsten voor de eerste nachtvorst en een paar weken laten uitharden in de zon.
+
+  komkommer:
+    naam: Komkommer
+    emoji: 🥒
+    familie: komkommer
+    methode: voorzaaien
+    venster: [04-20, 05-31]
+    uitplanten_na: 4
+    rij: 100
+    plant: 50
+    oogst_na: 55
+    oogst_duur: 8
+    opbrengst: 3 kg/plant
+    taken:
+      - { weken: 0, wat: klimrek of gaas plaatsen }
+
+  # ---------- blad en biet ----------
+  kropsla:
+    naam: Kropsla
+    emoji: 🥬
+    familie: blad
+    methode: voorzaaien
+    venster: [02-20, 08-15]
+    uitplanten_na: 4
+    rij: 30
+    plant: 30
+    oogst_na: 45
+    oogst_duur: 3
+    opbrengst: 1 stuks/plant
+    tip: Zaai elke 3 à 4 weken een beetje (herhaal) voor een doorlopende oogst.
+
+  pluksla:
+    naam: Pluksla
+    emoji: 🥗
+    familie: blad
+    methode: zaaien
+    venster: [04-01, 08-31]
+    rij: 20
+    plant: 15
+    uitdunnen: true
+    oogst_na: 35
+    oogst_duur: 6
+    opbrengst: 1.5 kg/m2
+
+  spinazie:
+    naam: Spinazie
+    emoji: 🍃
+    familie: blad
+    methode: zaaien
+    venster: [[03-01, 04-30], [08-15, 09-20]]
+    rij: 20
+    plant: 8
+    uitdunnen: true
+    oogst_na: 45
+    oogst_duur: 3
+    opbrengst: 1.5 kg/m2
+    tip: Schiet door bij lange dagen; zaai in het voorjaar of in de nazomer.
+
+  andijvie:
+    naam: Andijvie
+    emoji: 🥬
+    familie: blad
+    methode: voorzaaien
+    venster: [06-01, 07-20]
+    uitplanten_na: 4
+    rij: 30
+    plant: 30
+    oogst_na: 60
+    oogst_duur: 6
+    opbrengst: 1 stuks/plant
+    tip: Ideale nateelt na vroege aardappelen of erwten.
+
+  veldsla:
+    naam: Veldsla
+    emoji: 🌿
+    familie: blad
+    methode: zaaien
+    venster: [08-01, 09-30]
+    rij: 10
+    plant: 5
+    oogst_na: 60
+    oogst_duur: 16
+    opbrengst: 1 kg/m2
+    tip: Winterhard; je kunt de hele winter oogsten.
+
+  snijbiet:
+    naam: Snijbiet
+    emoji: 🥬
+    familie: blad
+    methode: zaaien
+    venster: [04-15, 07-15]
+    rij: 30
+    plant: 20
+    uitdunnen: true
+    oogst_na: 60
+    oogst_duur: 16
+    opbrengst: 4 kg/m2
+
+  rodebiet:
+    naam: Rode biet
+    emoji: 🫜
+    familie: blad
+    methode: zaaien
+    venster: [04-15, 06-30]
+    rij: 25
+    plant: 10
+    uitdunnen: true
+    oogst_na: 80
+    oogst_duur: 8
+    opbrengst: 3 kg/m2
+
+  # ---------- schermbloemigen ----------
+  wortel:
+    naam: Wortel
+    emoji: 🥕
+    familie: wortel
+    methode: zaaien
+    venster: [03-15, 06-30]
+    rij: 20
+    plant: 4
+    uitdunnen: true
+    oogst_na: 90
+    oogst_duur: 8
+    opbrengst: 3 kg/m2
+    tip: Gaas tegen de wortelvlieg; dun 's avonds uit, dan ruikt de vlieg het minder.
+
+  pastinaak:
+    naam: Pastinaak
+    emoji: 🥕
+    familie: wortel
+    methode: zaaien
+    venster: [03-20, 05-15]
+    rij: 30
+    plant: 10
+    uitdunnen: true
+    oogst_na: 150
+    oogst_duur: 16
+    opbrengst: 3 kg/m2
+    tip: Wordt zoeter na vorst en kan de winter in de grond blijven.
+
+  peterselie:
+    naam: Peterselie
+    emoji: 🌿
+    familie: wortel
+    methode: zaaien
+    venster: [04-01, 06-30]
+    rij: 25
+    plant: 15
+    uitdunnen: true
+    oogst_na: 70
+    oogst_duur: 20
+    opbrengst: 4 bos/m2
+    tip: Kiemt traag (3 tot 4 weken); grond vochtig houden.
+
+  dille:
+    naam: Dille
+    emoji: 🌿
+    familie: wortel
+    methode: zaaien
+    venster: [04-15, 07-31]
+    rij: 25
+    plant: 10
+    oogst_na: 50
+    oogst_duur: 6
+    opbrengst: 3 bos/m2
+
+  # ---------- uien ----------
+  ui:
+    naam: Ui
+    emoji: 🧅
+    familie: ui
+    methode: poten
+    venster: [03-15, 04-30]
+    rij: 25
+    plant: 10
+    oogst_na: 120
+    oogst_duur: 3
+    opbrengst: 0.1 kg/plant
+    plantgoed_naam: plantuitjes
+    tip: Oogsten als het loof omvalt, daarna een paar weken laten drogen.
+
+  sjalot:
+    naam: Sjalot
+    emoji: 🧅
+    familie: ui
+    methode: poten
+    venster: [02-15, 04-15]
+    rij: 30
+    plant: 15
+    oogst_na: 130
+    oogst_duur: 3
+    opbrengst: 0.25 kg/plant
+    plantgoed_naam: plantsjalotten
+    tip: Elk sjalotje wordt een pol van 6 tot 10 nieuwe. Sommige rassen (zoals Golden Gourmet) kunnen ook in de herfst; zie wintersjalot.
+
+  wintersjalot:
+    naam: Wintersjalot
+    emoji: 🧅
+    familie: ui
+    methode: poten
+    venster: [10-01, 11-30]
+    rij: 30
+    plant: 15
+    oogst_na: 255
+    oogst_duur: 3
+    opbrengst: 0.25 kg/plant
+    plantgoed_naam: plantsjalotten
+    tip: In de herfst gepote sjalotten wortelen voor de winter en zijn eind juni klaar, een paar weken eerder dan in het voorjaar gepote. Bij strenge vorst afdekken met wat blad of stro.
+
+  winterui:
+    naam: Winterui
+    emoji: 🧅
+    familie: ui
+    methode: poten
+    venster: [09-15, 11-15]
+    rij: 25
+    plant: 10
+    oogst_na: 235
+    oogst_duur: 3
+    opbrengst: 0.1 kg/plant
+    plantgoed_naam: plantuitjes
+    tip: Wordt in de herfst geplant en is in juni al klaar, ruim voor de gewone plantui. Daarna is er nog plek voor een nateelt.
+
+  knoflook:
+    naam: Knoflook
+    emoji: 🧄
+    familie: ui
+    methode: poten
+    venster: [10-01, 11-30]
+    rij: 25
+    plant: 12
+    oogst_na: 260
+    oogst_duur: 3
+    opbrengst: 1 stuks/plant
+    plantgoed_naam: teentjes
+    tip: Poten in de herfst geeft de grootste bollen.
+
+  prei:
+    naam: Prei
+    emoji: 🌱
+    familie: ui
+    methode: voorzaaien
+    venster: [03-01, 04-30]
+    uitplanten_na: 10
+    rij: 30
+    plant: 15
+    oogst_na: 120
+    oogst_duur: 16
+    opbrengst: 1 stuks/plant
+    tip: Plant in een diep pootgat en spoel aan met water; dat geeft een lange witte schacht.
+
+  # ---------- koolachtigen ----------
+  boerenkool:
+    naam: Boerenkool
+    emoji: 🥬
+    familie: kool
+    methode: voorzaaien
+    venster: [04-15, 06-15]
+    uitplanten_na: 6
+    rij: 50
+    plant: 50
+    oogst_na: 120
+    oogst_duur: 14
+    opbrengst: 1 kg/plant
+    tip: Smaakt beter na de eerste vorst. Net erover tegen koolwitjes.
+
+  spruitkool:
+    naam: Spruitkool
+    emoji: 🥬
+    familie: kool
+    methode: voorzaaien
+    venster: [03-15, 04-30]
+    uitplanten_na: 7
+    rij: 60
+    plant: 60
+    oogst_na: 150
+    oogst_duur: 12
+    opbrengst: 1 kg/plant
+
+  broccoli:
+    naam: Broccoli
+    emoji: 🥦
+    familie: kool
+    methode: voorzaaien
+    venster: [03-15, 06-30]
+    uitplanten_na: 5
+    rij: 50
+    plant: 45
+    oogst_na: 70
+    oogst_duur: 4
+    opbrengst: 0.5 kg/plant
+    tip: Na de hoofdroos volgen nog weken zijscheuten.
+
+  spitskool:
+    naam: Spitskool
+    emoji: 🥬
+    familie: kool
+    methode: voorzaaien
+    venster: [03-01, 06-15]
+    uitplanten_na: 5
+    rij: 50
+    plant: 40
+    oogst_na: 70
+    oogst_duur: 3
+    opbrengst: 1 stuks/plant
+
+  koolrabi:
+    naam: Koolrabi
+    emoji: 🥬
+    familie: kool
+    methode: voorzaaien
+    venster: [03-01, 07-15]
+    uitplanten_na: 4
+    rij: 30
+    plant: 25
+    oogst_na: 50
+    oogst_duur: 3
+    opbrengst: 1 stuks/plant
+
+  radijs:
+    naam: Radijs
+    emoji: 🔴
+    familie: kool
+    methode: zaaien
+    venster: [03-15, 09-15]
+    rij: 10
+    plant: 3
+    uitdunnen: true
+    oogst_na: 28
+    oogst_duur: 2
+    opbrengst: 1 stuks/plant
+    tip: Snelle tussenteelt; zaai elke twee weken een rijtje.
+
+  # ---------- vlinderbloemigen ----------
+  stamboon:
+    naam: Stamboon
+    emoji: 🫛
+    familie: peul
+    methode: zaaien
+    venster: [05-15, 07-15]
+    rij: 40
+    plant: 10
+    oogst_na: 60
+    oogst_duur: 4
+    opbrengst: 1.5 kg/m2
+    tip: Niet te vroeg zaaien; bonen willen warme grond.
+
+  stokboon:
+    naam: Stokboon
+    emoji: 🫘
+    familie: peul
+    methode: zaaien
+    venster: [05-15, 06-30]
+    rij: 60
+    plant: 15
+    oogst_na: 70
+    oogst_duur: 8
+    opbrengst: 0.4 kg/plant
+    taken:
+      - { weken: -1, wat: bonenstokken plaatsen }
+
+  doperwt:
+    naam: Doperwt
+    emoji: 🫛
+    familie: peul
+    methode: zaaien
+    venster: [03-15, 05-15]
+    rij: 40
+    plant: 5
+    oogst_na: 80
+    oogst_duur: 4
+    opbrengst: 1 kg/m2
+    taken:
+      - { weken: 3, wat: rijshout of gaas plaatsen }
+
+  tuinboon:
+    naam: Tuinboon
+    emoji: 🫛
+    familie: peul
+    methode: zaaien
+    venster: [02-20, 04-15]
+    rij: 45
+    plant: 15
+    oogst_na: 100
+    oogst_duur: 4
+    opbrengst: 2 kg/m2
+    taken:
+      - { weken: 9, wat: toppen zodra de eerste luis verschijnt }
+
+  # ---------- overig ----------
+  basilicum:
+    naam: Basilicum
+    emoji: 🌿
+    familie: overig
+    methode: voorzaaien
+    venster: [04-01, 05-31]
+    uitplanten_na: 5
+    rij: 25
+    plant: 25
+    oogst_na: 30
+    oogst_duur: 10
+    opbrengst: 0.1 kg/plant
+    tip: Pas na half mei naar buiten, op een warm plekje.
+
+  suikermais:
+    naam: Suikermaïs
+    emoji: 🌽
+    familie: overig
+    methode: voorzaaien
+    venster: [04-20, 05-20]
+    uitplanten_na: 4
+    rij: 50
+    plant: 40
+    oogst_na: 80
+    oogst_duur: 3
+    opbrengst: 1.5 stuks/plant
+    tip: Plant in een blok in plaats van één lange rij; dat geeft betere bestuiving.
+
+  # ---------- vaste planten (fruit) ----------
+  # Zonder datum in tuin.yaml staan ze er al; met datum worden ze dan geplant.
+  aardbei:
+    naam: Aardbei
+    emoji: 🍓
+    familie: overig
+    vast: true
+    venster: [08-01, 09-30]
+    oogst: [06-01, 07-10]
+    oogst_na: 280
+    rij: 40
+    plant: 30
+    opbrengst: 0.3 kg/plant
+    taken:
+      - { datum: 03-15, wat: 'dood blad weghalen, wat compost tussen de planten' }
+      - { datum: 05-10, wat: stro onder de planten leggen en een net tegen vogels }
+      - { datum: 07-15, wat: 'oud blad afknippen; uitlopers weghalen of oppotten als nieuwe planten' }
+    tip: Na drie à vier jaar neemt de oogst af. Vernieuw dan het bed met eigen uitlopers, liefst op een nieuwe plek.
+
+  framboos:
+    naam: Framboos
+    emoji: 🫐
+    familie: overig
+    vast: true
+    venster: [10-15, 03-15]
+    oogst: [06-25, 08-10]
+    oogst_na: 240
+    rij: 150
+    plant: 45
+    opbrengst: 0.5 kg/plant
+    taken:
+      - { datum: 03-01, wat: 'zwakke scheuten weghalen, de rest aanbinden; compost geven' }
+      - { datum: 08-20, wat: 'gedragen scheuten tot de grond afknippen; 6 à 8 sterke nieuwe per meter laten staan' }
+    tip: Zomerframbozen dragen op de scheuten van vorig jaar. Draagt jouw framboos pas vanaf half augustus? Gebruik dan herfstframboos.
+
+  herfstframboos:
+    naam: Herfstframboos
+    emoji: 🫐
+    familie: overig
+    vast: true
+    venster: [10-15, 03-15]
+    oogst: [08-15, 10-15]
+    oogst_na: 150
+    rij: 150
+    plant: 45
+    opbrengst: 0.4 kg/plant
+    taken:
+      - { datum: 02-15, wat: alle scheuten tot de grond afknippen }
+      - { datum: 03-15, wat: compost geven }
+    tip: Draagt op de scheuten van dit jaar; in de winter knip je alles af.
+
+  ribes:
+    naam: Ribes
+    emoji: 🍇
+    familie: overig
+    vast: true
+    venster: [10-15, 03-15]
+    oogst: [07-01, 07-31]
+    oogst_na: 240
+    rij: 150
+    plant: 120
+    opbrengst: 3 kg/plant
+    taken:
+      - { datum: 02-01, wat: 'snoeien: oudste takken weg, het midden open houden' }
+      - { datum: 03-15, wat: compost of mulch rond de struik }
+      - { datum: 06-10, wat: net over de struik tegen vogels }
+    tip: Geldt voor rode, witte en zwarte bes. Bij zwarte bes knip je elk jaar een paar van de oudste takken laag weg.
+
+  phacelia:
+    naam: Phacelia
+    emoji: 💜
+    familie: overig
+    methode: zaaien
+    venster: [04-01, 09-15]
+    breedwerpig: true
+    zaad_g_m2: 2
+    oogst_na: 60
+    oogst_duur: 2
+    oogst_label: Maaien en onderwerken
+    tip: Groenbemester, bodemverbeteraar en bijenplant; prima voor lege bedden in de nazomer.
+
+  # ---------- bloemen ----------
+  bloemenmengsel:
+    naam: Bloemenmengsel
+    emoji: 🌼
+    familie: bloemen
+    methode: zaaien
+    venster: [04-15, 06-15]
+    breedwerpig: true
+    zaad_g_m2: 2
+    oogst_na: 70
+    oogst_duur: 12
+    oogst_label: Bloei
+    tip: Zaai op een fijn, onkruidvrij zaaibed en druk het zaad aan; niet bemesten.
+
+  dahlia:
+    naam: Dahlia
+    emoji: 🌺
+    familie: bloemen
+    methode: poten
+    venster: [05-01, 05-31]
+    rij: 60
+    plant: 50
+    oogst_na: 80
+    oogst_duur: 12
+    oogst_label: Eerste bloemen plukken
+    opbrengst: 15 stuks/plant
+    plantgoed_naam: knollen
+    taken:
+      - { weken: 3, wat: steunstok plaatsen en slakken in de gaten houden }
+      - { weken: 23, wat: knollen rooien na de eerste nachtvorst en vorstvrij bewaren }
+    tip: Hoe meer je plukt, hoe meer bloemen er komen.
+
+  zonnebloem:
+    naam: Zonnebloem
+    emoji: 🌻
+    familie: bloemen
+    methode: zaaien
+    venster: [04-20, 06-15]
+    rij: 50
+    plant: 40
+    uitdunnen: true
+    oogst_na: 80
+    oogst_duur: 6
+    oogst_label: Bloei
+    opbrengst: 1 stuks/plant
+    taken:
+      - { weken: 6, wat: hoge rassen aan een stok binden }
+    tip: Jonge plantjes zijn geliefd bij slakken; eventueel binnen voorzaaien in potjes.

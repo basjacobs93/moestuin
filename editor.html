@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuin bewerken</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✏️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="editor">
+  <header class="kop">
+    <div class="wrap breed">
+      <div class="kopregel">
+        <h1>Tuin bewerken</h1>
+        <a href="index.html" class="terug">← naar de planner</a>
+      </div>
+      <div class="werkbalk">
+        <button type="button" class="knop primair" id="opslaan">💾 Opslaan…</button>
+        <button type="button" class="knop" id="download">⬇️ Download</button>
+        <button type="button" class="knop" id="kopieer">📋 Kopieer YAML</button>
+        <a class="knop" id="bekijk" href="index.html?concept" target="_blank">👁️ Bekijk in planner</a>
+        <button type="button" class="knop" id="ongedaan" disabled title="Ctrl/Cmd+Z">↶ Ongedaan maken</button>
+        <button type="button" class="knop" id="opnieuw">Opnieuw vanaf tuin.yaml</button>
+        <span id="status" class="status" role="status"></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap breed">
+    <div id="fout" class="fout" hidden></div>
+    <div id="melding" class="waarschuwingen" hidden></div>
+
+    <div class="editor-grid">
+      <div class="formulier" id="formulier"></div>
+
+      <div class="voorbeeld">
+        <div class="segment tabs" role="tablist">
+          <button type="button" role="tab" data-tab="plan" aria-pressed="true">Plattegrond</button>
+          <button type="button" role="tab" data-tab="yaml" aria-pressed="false">YAML</button>
+        </div>
+        <div data-paneel="plan">
+          <p class="uitleg">Sleep een bed om het te verplaatsen (op 5 cm nauwkeurig); klik erop om het te bewerken.</p>
+          <div id="plan" class="plan"></div>
+          <div id="legenda" class="legenda"></div>
+          <p id="samenvatting" class="uitleg samenvatting"></p>
+          <ul id="waarschuwingen" class="waarschuwingslijst"></ul>
+        </div>
+        <div data-paneel="yaml" hidden>
+          <p class="uitleg">Je kunt hier ook direct typen; geldige wijzigingen worden meteen overgenomen in het formulier. Hier kun je bijvoorbeeld onder <code>gewassen:</code> eigen gewassen toevoegen.</p>
+          <textarea id="yaml" spellcheck="false" aria-label="tuin.yaml"></textarea>
+          <p id="yaml-fout" class="yaml-fout" hidden></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  <script src="planner.js"></script>
+  <script src="tekening.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>
