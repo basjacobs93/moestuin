@@ -31,7 +31,8 @@ python3 -m http.server
 Ga daarna naar <http://localhost:8000> (de editor staat op <http://localhost:8000/editor.html>).
 
 Wil je zien hoe de pagina er op een andere dag uitziet? Gebruik dan
-`http://localhost:8000/?vandaag=2027-05-20&modus=datum`.
+`http://localhost:8000/?vandaag=2027-05-20&modus=datum`
+(of `&modus=2026` voor de indeling van dat jaar).
 
 ## De editor
 
@@ -87,6 +88,31 @@ ertegen). Geef je ze een `datum`, dan plant de site ze op die dag.
 
 De bedden zijn ingekleurd per plantenfamilie. Zo zie je in één oogopslag hoe de
 vruchtwisseling loopt. Schuif volgend jaar de families één bed op.
+
+### Vorige jaren en wisselteelt
+
+Zet onder `vorige_jaren` wat er vorige seizoenen waar stond, per jaar en per bednaam,
+in dezelfde vorm als `teelt` (dus ook met `deel` als een bed in stroken verdeeld was):
+
+```yaml
+vorige_jaren:
+  '2026':
+    Bed 1: [tomaat]
+    Bed 2:
+      - { gewas: aardappel, deel: 2 }
+      - { gewas: boerenkool }
+    Oud bed: { positie: [0, 0], maat: [1.2, 3], teelt: [wortel] }  # bed dat er niet meer is
+```
+
+Op de plattegrond staat dan naast **Hele seizoen** en **Op datum** een knop per jaar,
+zodat je de indeling van toen ziet. Klik je een strook aan, dan zie je onder
+**Eerder op deze plek** wat er stond. Komt een familie te snel terug op dezelfde plek,
+dan krijg je een waarschuwing. Hoe vaak dat mag staat bij de families in
+`gewassen.yaml` (`rust: 4` = eens in de vier jaar). Het vergelijkt op plek, niet op
+bednaam, dus ook als je bedden of stroken anders indeelt klopt het.
+
+Aan het eind van het seizoen zet je de indeling van dit jaar onder `vorige_jaren` en
+begin je aan het nieuwe jaar.
 
 De waarden in `gewassen.yaml` zijn vuistregels voor Nederland. Pas ze aan op je eigen
 rassen en ervaring.

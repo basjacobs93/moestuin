@@ -223,12 +223,15 @@
     }
     taken.sort((a, b) => a.datum - b.datum || volgorde(a) - volgorde(b));
 
+    const vorigeJaren = leesVorigeJaren(tuinDoc, gewassenDoc, tuin, waarschuwingen);
+    wisselteelt(bedden, families, jaar, vorigeJaren, waarschuwingen);
+
     const alleData = [...taken.map((t) => t.datum), ...teelten.map((t) => t.oogstEind)];
     const begin = alleData.length ? new Date(Math.min(...alleData)) : utc(jaar, 1, 1);
     const eind = alleData.length ? new Date(Math.max(...alleData)) : utc(jaar, 12, 31);
 
     return {
-      tuin, families, gewassen, bedden, teelten, taken, waarschuwingen,
+      tuin, families, gewassen, bedden, teelten, taken, waarschuwingen, vorigeJaren,
       bereik: {
         begin: utc(Math.min(begin.getUTCFullYear(), jaar), begin.getUTCFullYear() < jaar ? begin.getUTCMonth() + 1 : 1, 1),
         eind: utc(eind.getUTCFullYear(), eind.getUTCMonth() + 2, 1),
@@ -237,7 +240,73 @@
     };
   }
 
-  const SOORT_VOLGORDE = ['eigen', 'voorbereiden', 'binnen', 'afharden', 'zaaien', 'poten', 'uitplanten', 'uitdunnen', 'verzorgen', 'oogsten', 'opruimen'];
+  // ---------- vorige jaren en wisselteelt ----------
+
+  // vorige_jaren in tuin.yaml: per jaar per bednaam een lijst teelten (zelfde vorm als `teelt`).
+  // Een bed dat er niet meer is krijgt zelf positie en maat: { positie, maat, teelt }.
+  // Elk jaar wordt een eigen plan met de huidige bedden als ondergrond.
+  function leesVorigeJaren(tuinDoc, gewassenDoc, tuin, waarschuwingen) {
+    const huidig = tuinDoc.bedden || [];
+    return Object.entries(tuinDoc.vorige_jaren || {})
+      .map(([j, perBed]) => {
+        const vj = +j;
+        if (!Number.isInteger(vj) || vj >= tuin.jaar) {
+          waarschuwingen.push(`vorige_jaren: "${j}" is geen jaar vóór ${tuin.jaar}.`);
+          return null;
+        }
+        const bedden = huidig.map((b) => ({ ...b, teelt: [] }));
+        for (const [naam, w] of Object.entries(perBed || {})) {
+          const o = Array.isArray(w) ? { teelt: w } : (w || {});
+          const bed = bedden.find((b) => String(b.naam) === naam);
+          if (bed) {
+            Object.assign(bed, o, { teelt: o.teelt || [] });
+          } else if (o.positie && o.maat) {
+            bedden.push({ ...o, naam, teelt: o.teelt || [] });
+          } else {
+            waarschuwingen.push(`vorige_jaren ${vj}: er is geen bed "${naam}" meer; geef het een positie en maat.`);
+          }
+        }
+        const p = bouwPlan({ tuin: { ...tuinDoc.tuin, jaar: vj }, bedden, families: tuinDoc.families, gewassen: tuinDoc.gewassen }, gewassenDoc);
+        // Alleen wat over dat jaar zelf gaat (overlappende bedden e.d. melden we al voor dit jaar).
+        for (const w of p.waarschuwingen) if (!waarschuwingen.includes(w)) waarschuwingen.push(`${vj}: ${w}`);
+        return { jaar: vj, plan: p };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.jaar - a.jaar);
+  }
+
+  // Deelt strook b een wezenlijk stuk grond met strook a (meer dan 10% van de kleinste)?
+  function overlapt(a, b) {
+    const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+    const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+    return w > 0 && h > 0 && w * h > 0.1 * Math.min(a.w * a.h, b.w * b.h);
+  }
+
+  // Per strook: wat stond hier eerder (strook.vroeger), en komt een familie te snel terug?
+  // `rust` bij een familie in gewassen.yaml = om de hoeveel jaar die familie op dezelfde plek mag.
+  function wisselteelt(bedden, families, jaar, vorigeJaren, waarschuwingen) {
+    for (const strook of bedden.flatMap((b) => b.stroken)) {
+      strook.vroeger = vorigeJaren
+        .map((v) => ({ jaar: v.jaar, teelten: v.plan.teelten.filter((t) => overlapt(t.strook.rect, strook.rect)) }))
+        .filter((v) => v.teelten.length);
+      const gemeld = new Set();
+      for (const t of strook.teelten) {
+        const fam = families[t.gewas.familie];
+        if (t.vast || !fam || !fam.rust || gemeld.has(t.gewas.familie)) continue;
+        for (const v of strook.vroeger) {
+          if (jaar - v.jaar >= fam.rust) continue;
+          const eerder = v.teelten.find((x) => !x.vast && x.gewas.familie === t.gewas.familie);
+          if (!eerder) continue;
+          t.wisselteelt = { jaar: v.jaar, teelt: eerder };
+          gemeld.add(t.gewas.familie);
+          waarschuwingen.push(`${strook.bed} (${strook.id}): ${t.gewas.naam} staat waar in ${v.jaar} ${eerder.gewas.naam} stond, allebei ${fam.naam.toLowerCase()}. Die familie hoort hier pas in ${v.jaar + fam.rust} weer.`);
+          break;
+        }
+      }
+    }
+  }
+
+  const SOORT_VOLGORDE =['eigen', 'voorbereiden', 'binnen', 'afharden', 'zaaien', 'poten', 'uitplanten', 'uitdunnen', 'verzorgen', 'oogsten', 'opruimen'];
   const volgorde = (t) => SOORT_VOLGORDE.indexOf(t.soort);
 
   function maakTeelt(k, strook, vrijVanaf, isNateelt, gewassen, jaar, waarschuwingen) {

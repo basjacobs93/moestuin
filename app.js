@@ -12,7 +12,7 @@
 
   let plan;
   let familieKleur = {};
-  const staat = { modus: 'seizoen', datum: VANDAAG, gekozen: null };
+  const staat = { modus: 'seizoen', datum: VANDAAG, gekozen: null, vorigJaar: null };
 
   // ---------- hulpjes ----------
 
@@ -160,32 +160,46 @@
     const zetDatumLabel = () => {
       $('#schuif-datum').textContent = staat.modus === 'datum'
         ? `week ${P.weekNummer(staat.datum)} · ${kort(staat.datum)} ${staat.datum.getUTCFullYear()}`
-        : '';
+        : staat.modus === 'vorig' ? `zo stond het in ${staat.vorigJaar}` : '';
     };
     schuif.addEventListener('input', () => {
       staat.datum = weken[+schuif.value];
       zetDatumLabel();
       tekenPlattegrond();
     });
+    // Een knop per vorig jaar, om de indeling van toen te bekijken.
+    $('.segment').append(...plan.vorigeJaren.map((v) => el('button', { type: 'button', 'data-modus': 'vorig', 'data-jaar': v.jaar, 'aria-pressed': 'false', tekst: v.jaar })));
     document.querySelectorAll('.segment button').forEach((b) => b.addEventListener('click', () => {
+      const vorigJaar = b.dataset.jaar ? +b.dataset.jaar : null;
+      if (vorigJaar !== staat.vorigJaar) {
+        staat.gekozen = null;
+        $('#detail').replaceChildren(el('p', { class: 'uitleg', tekst: 'Klik op een strook voor details.' }));
+      }
       staat.modus = b.dataset.modus;
+      staat.vorigJaar = vorigJaar;
       document.querySelectorAll('.segment button').forEach((x) => x.setAttribute('aria-pressed', x === b));
       schuif.disabled = staat.modus !== 'datum';
       zetDatumLabel();
       tekenPlattegrond();
     }));
 
-    if (new URLSearchParams(location.search).get('modus') === 'datum') document.querySelector('[data-modus="datum"]').click();
+    // ?modus=datum, of ?modus=2026 voor de indeling van dat jaar
+    const m = zoek.get('modus');
+    const knop = m && [...document.querySelectorAll('.segment button')].find((b) => b.dataset.modus === m || b.dataset.jaar === m);
+    if (knop) knop.click();
 
-    const gebruikt = new Set(plan.teelten.map((t) => t.gewas.familie));
+    const gebruikt = new Set([plan, ...plan.vorigeJaren.map((v) => v.plan)].flatMap((p) => p.teelten.map((t) => t.gewas.familie)));
     $('#legenda').replaceChildren(...Object.entries(plan.families)
       .filter(([k]) => gebruikt.has(k))
       .map(([k, f]) => el('span', {}, el('i', { style: `background:${familieKleur[k]}` }), f.naam)));
   }
 
+  const vorigPlan = () => plan.vorigeJaren.find((v) => v.jaar === staat.vorigJaar).plan;
+
   function tekenPlattegrond() {
-    Tekening.plattegrond($('#plan'), plan, {
-      modus: staat.modus, datum: staat.datum, kleuren: familieKleur,
+    const vorig = staat.modus === 'vorig';
+    Tekening.plattegrond($('#plan'), vorig ? vorigPlan() : plan, {
+      modus: vorig ? 'seizoen' : staat.modus, datum: staat.datum, kleuren: familieKleur,
       gekozenStrook: staat.gekozen, onStrook: kiesStrook,
     });
   }
@@ -195,7 +209,20 @@
     tekenPlattegrond();
     const d = $('#detail');
     d.replaceChildren(el('h3', { tekst: `${strook.bed} · strook ${getal(strook.lengte, 2)} × ${getal(strook.breedte, 2)} m` }));
+    if (staat.modus === 'vorig') {
+      d.append(el('ul', { class: 'vroeger' }, strook.teelten.map((t) => el('li', {},
+        el('strong', { tekst: `${t.gewas.emoji} ${t.gewas.naam}` }), ` · ${plan.families[t.gewas.familie].naam}`,
+        t.notitie ? el('span', { class: 'plek', tekst: ` · ${t.notitie}` }) : null))));
+      return;
+    }
     d.append(el('div', { class: 'teelten' }, strook.teelten.map(teeltDetail)));
+    if (strook.vroeger.length) {
+      d.append(el('h4', { tekst: 'Eerder op deze plek' }), el('ul', { class: 'vroeger' }, strook.vroeger.map((v) => el('li', {},
+        el('strong', { tekst: `${v.jaar}: ` }),
+        v.teelten.map((t) => `${t.gewas.emoji} ${t.gewas.naam} (${plan.families[t.gewas.familie].naam.toLowerCase()})`).join(', ')))));
+    } else if (plan.vorigeJaren.length) {
+      d.append(el('p', { class: 'uitleg', tekst: 'Van deze plek staat niets in vorige_jaren.' }));
+    }
   }
 
   function teeltDetail(t) {
@@ -215,6 +242,7 @@
       el('strong', { tekst: `${g.emoji} ${g.naam}${t.herhaling ? ` (zaaiing ${t.herhaling})` : ''}${t.isNateelt ? ' · nateelt' : ''}` }),
       el('dl', {}, rijen.flatMap(([a, b]) => [el('dt', { tekst: a }), el('dd', { tekst: b })])),
       t.notitie ? el('p', { class: 'tip', tekst: `📝 ${t.notitie}` }) : null,
+      t.wisselteelt ? el('p', { class: 'tip let-op', tekst: `⚠️ In ${t.wisselteelt.jaar} stond hier ${t.wisselteelt.teelt.gewas.naam}, ook ${plan.families[g.familie].naam.toLowerCase()}.` }) : null,
       g.tip ? el('p', { class: 'tip', tekst: `💡 ${g.tip}` }) : null,
     );
   }

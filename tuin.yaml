@@ -5,6 +5,7 @@
 # Bed:   positie [x, y] (linkerbovenhoek), maat [breed, hoog], soort (bed/kas/compost/pad/overig)
 # Teelt: gewas, deel (strooklengte in m, weglaten = rest), datum (2027-04-15, 04-15 of week 15),
 #        plantgoed (plantjes kopen), herhaal + elke (gespreid zaaien), daarna (nateelten), notitie
+# Vorige jaren (voor de wisselteelt): vorige_jaren > jaar > bednaam > lijst teelten
 
 tuin:
   naam: Onze moestuin
@@ -24,21 +25,23 @@ bedden:
   - naam: Bed 1
     positie: [1.94, 0]
     maat: [1.34, 5]
-    notitie: peulvruchten en blad (in 2026 stonden hier snoeptomaatjes)
+    notitie: wortels en uien
     teelt:
-      - {gewas: doperwt, deel: 1.5, daarna: [veldsla]}
-      - {gewas: stamboon, deel: 1.5}
-      - {gewas: kropsla, deel: 1.2, herhaal: 3, elke: 3}
-      - {gewas: pluksla}
+      - {gewas: prei, deel: 0.8}
+      - {gewas: wortel, deel: 0.9}
+      - {gewas: knoflook, deel: 1, datum: 2026-10-17, notitie: 'Messidrome, 5 bollen (± 40 à 50 teentjes, alleen de grote)', daarna: [phacelia]}
+      - {gewas: wintersjalot, deel: 1.1, datum: 2026-10-17, notitie: 'Golden Gourmet 10/15, 500 g (± 30 sjalotten)'}
+      - {gewas: winterui, deel: 1.2, datum: 2026-10-17, notitie: 'Shakespeare 14/21, 250 g (± 65 uitjes)', daarna: [andijvie]}
 
   - naam: Bed 2
     positie: [3.88, 0]
     maat: [1.34, 5]
-    notitie: aardappels en vruchtgewassen
+    notitie: peulvruchten en blad
     teelt:
-      - {gewas: aardappel, deel: 2, notitie: 'vroeg ras, bijv. Frieslander', daarna: [andijvie]}
-      - {gewas: courgette, deel: 1.5}
-      - {gewas: pompoen, notitie: ranken mogen over het pad groeien}
+      - {gewas: doperwt, deel: 1.5, daarna: [veldsla]}
+      - {gewas: stamboon, deel: 1.5}
+      - {gewas: kropsla, deel: 1.2, herhaal: 3, elke: 3}
+      - {gewas: pluksla, daarna: [peterselie]}
 
   - naam: Fruit
     positie: [5.82, 0]
@@ -58,18 +61,16 @@ bedden:
       - {gewas: boerenkool, deel: 1.5}
       - {gewas: broccoli, deel: 1.5}
       - {gewas: spitskool, deel: 1}
-      - {gewas: radijs, herhaal: 2, elke: 2}
+      - {gewas: radijs, herhaal: 2, elke: 2, daarna: [basilicum]}
 
   - naam: Bed 4
     positie: [9.7, 0]
     maat: [1.34, 5]
-    notitie: wortels en uien
+    notitie: aardappels en vruchtgewassen
     teelt:
-      - {gewas: winterui, deel: 1.3, datum: 2026-10-17, notitie: 'Shakespeare 14/21, 250 g (± 65 uitjes)', daarna: [andijvie]}
-      - {gewas: knoflook, deel: 1.1, datum: 2026-10-17, notitie: 'Messidrome, 5 bollen (± 40 à 50 teentjes, alleen de grote)', daarna: [phacelia]}
-      - {gewas: wintersjalot, deel: 1.2, datum: 2026-10-17, notitie: 'Golden Gourmet 10/15, 500 g (± 30 sjalotten)'}
-      - {gewas: prei, deel: 0.8}
-      - {gewas: wortel}
+      - {gewas: aardappel, deel: 2, notitie: 'vroeg ras, bijv. Frieslander', daarna: [andijvie]}
+      - {gewas: courgette, deel: 1.5}
+      - {gewas: pompoen, notitie: ranken mogen over het pad groeien}
 
   - naam: Compost
     soort: compost
@@ -90,3 +91,22 @@ taken:
   - {datum: 2026-11-01, wat: Lege bedden afdekken met blad of een groenbemester}
   - {datum: 01-15, wat: Zaadvoorraad nakijken en zaden bestellen}
   - {datum: 03-01, wat: Compost over de bedden verdelen}
+
+vorige_jaren:
+  '2026':
+    Bloemen: [bloemenmengsel]
+    Bed 1:
+      - gewas: tomaat
+        notitie: snoeptomaatjes
+      - aubergine
+      - rodebiet
+    Bed 2: [pompoen]
+    Fruit:
+      - {gewas: aardbei, deel: 1}
+      - {gewas: herfstframboos, deel: 1.3}
+      - {gewas: ribes, deel: 1.3}
+      - {gewas: herfstframboos}
+    Bed 3: [ui, knoflook, basilicum, bieslook, peterselie, wortel]
+    Bed 4:
+      - gewas: tuinboon
+        daarna: [boerenkool]

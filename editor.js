@@ -59,6 +59,7 @@
 # Bed:   positie [x, y] (linkerbovenhoek), maat [breed, hoog], soort (bed/kas/compost/pad/overig)
 # Teelt: gewas, deel (strooklengte in m, weglaten = rest), datum (2027-04-15, 04-15 of week 15),
 #        plantgoed (plantjes kopen), herhaal + elke (gespreid zaaien), daarna (nateelten), notitie
+# Vorige jaren (voor de wisselteelt): vorige_jaren > jaar > bednaam > lijst teelten
 `;
 
   const flow = (v) => jsyaml.dump(v, { ...SCHEMA, flowLevel: 0, lineWidth: -1 }).trim();

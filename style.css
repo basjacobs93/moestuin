@@ -232,3 +232,10 @@ nav .nav-rechts { margin-left: auto; color: var(--accent); }
   .teelt-hoofd select { flex: 1 1 100%; }
   .nateelt .teelt-hoofd select { flex: 1 1 60%; }
 }
+
+/* eerder op deze plek (wisselteelt) */
+.detail h4 { margin: 14px 0 4px; font-size: 0.9rem; color: var(--tekst-2); }
+.vroeger { margin: 0; padding-left: 18px; }
+.vroeger li { margin: 2px 0; }
+.tip.let-op { color: var(--vandaag); }
+.vroeger .plek { color: var(--tekst-3); }

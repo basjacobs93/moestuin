@@ -26,14 +26,17 @@
 #   oogst          (alleen vast) oogstperiode [MM-DD, MM-DD]; taken met datum gelden elk jaar
 #   tip            korte tip
 
+# rust = om de hoeveel jaar een familie op dezelfde plek mag staan (wisselteelt).
+# Zonder rust wordt er niet op gecontroleerd. Wat waar stond zet je in tuin.yaml
+# onder vorige_jaren.
 families:
-  kool:        { naam: Koolachtigen }
-  nachtschade: { naam: Nachtschade }
-  peul:        { naam: Vlinderbloemigen }
-  wortel:      { naam: Schermbloemigen }
-  komkommer:   { naam: Komkommerachtigen }
-  blad:        { naam: Blad en biet }
-  ui:          { naam: Uien }
+  kool:        { naam: Koolachtigen, rust: 4 }
+  nachtschade: { naam: Nachtschade, rust: 4 }
+  peul:        { naam: Vlinderbloemigen, rust: 3 }
+  wortel:      { naam: Schermbloemigen, rust: 3 }
+  komkommer:   { naam: Komkommerachtigen, rust: 3 }
+  blad:        { naam: Blad en biet }  # gemengde groep (sla, spinazie, biet): geen controle
+  ui:          { naam: Uien, rust: 3 }
   bloemen:     { naam: Bloemen }
   overig:      { naam: Overig }
 
@@ -87,6 +90,20 @@ gewassen:
     oogst_duur: 8
     opbrengst: 1 kg/plant
     tip: Doet het buiten matig; beter in een kas of tunnel.
+
+  aubergine:
+    naam: Aubergine
+    emoji: 🍆
+    familie: nachtschade
+    methode: voorzaaien
+    venster: [02-15, 03-31]
+    uitplanten_na: 12
+    rij: 60
+    plant: 50
+    oogst_na: 80
+    oogst_duur: 8
+    opbrengst: 1 kg/plant
+    tip: Wil warmte; buiten alleen op een beschut, zonnig plekje, anders in kas of tunnel.
 
   # ---------- komkommerachtigen ----------
   courgette:
@@ -296,6 +313,20 @@ gewassen:
     opbrengst: 0.1 kg/plant
     plantgoed_naam: plantuitjes
     tip: Oogsten als het loof omvalt, daarna een paar weken laten drogen.
+
+  bieslook:
+    naam: Bieslook
+    emoji: 🌿
+    familie: ui
+    methode: voorzaaien
+    venster: [03-01, 04-30]
+    uitplanten_na: 6
+    rij: 25
+    plant: 25
+    oogst_na: 45
+    oogst_duur: 16
+    opbrengst: 0.2 kg/plant
+    tip: Komt elk jaar terug; om de paar jaar de pol scheuren.
 
   sjalot:
     naam: Sjalot
@@ -511,7 +542,7 @@ gewassen:
     emoji: 🌿
     familie: overig
     methode: voorzaaien
-    venster: [04-01, 05-31]
+    venster: [04-10, 05-31]
     uitplanten_na: 5
     rij: 25
     plant: 25
