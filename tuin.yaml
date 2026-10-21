@@ -104,9 +104,8 @@ vorige_jaren:
     Fruit:
       - {gewas: aardbei, deel: 1}
       - {gewas: herfstframboos, deel: 1.3}
-      - {gewas: ribes, deel: 1.3}
-      - {gewas: herfstframboos}
-    Bed 3: [ui, knoflook, basilicum, bieslook, peterselie, wortel]
+      - {gewas: aardappel}
+    Bed 3: [ui, knoflook, peterselie, bieslook, basilicum, wortel]
     Bed 4:
       - gewas: tuinboon
         daarna: [boerenkool]
